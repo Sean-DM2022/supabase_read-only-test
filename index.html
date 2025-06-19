@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Supabase Interview Assessment</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+</head>
+<body>
+  <h1>Interview Assessment Data</h1>
+  <pre id="output">Loading data...</pre>
+
+  <script>
+    const supabaseUrl = 'https://fctphxafiunzrjhceezk.supabase.co'
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjdHBoeGFmaXVuenJqaGNlZXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAyMTYyODgsImV4cCI6MjA2NTc5MjI4OH0.zwum89N1ocIjyj3IEaudCQr6DVn9DWHlmIi9dQ4tkUM'
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey)
+
+    async function loadData() {
+      const { data, error } = await supabase
+        .from('YOUR_TABLE_NAME')
+        .select('*')
+
+      const output = document.getElementById('output')
+      if (error) {
+        output.textContent = 'Error: ' + error.message
+      } else {
+        output.textContent = JSON.stringify(data, null, 2)
+      }
+    }
+
+    loadData()
+  </script>
+</body>
+</html>

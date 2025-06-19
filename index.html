@@ -1,24 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Supabase Interview Assessment</title>
+  <title>Interview Assessment Data Viewer</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .table-container {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .table-box {
+      flex: 1;
+      min-width: 400px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  </style>
 </head>
 <body>
-  <h1>Interview Assessment Data</h1>
-  <pre id="output">Loading data...</pre>
+  <h1>Interview Assessment Data Viewer</h1>
+  <div class="table-container">
+    <div class="table-box">
+      <h2>transaction_lines</h2>
+      <pre id="transaction_lines_output">Loading...</pre>
+    </div>
+    <div class="table-box">
+      <h2>transaction_lines_version_history</h2>
+      <pre id="transaction_lines_version_history_output">Loading...</pre>
+    </div>
+  </div>
 
   <script>
     const supabaseUrl = 'https://fctphxafiunzrjhceezk.supabase.co'
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZjdHBoeGFmaXVuenJqaGNlZXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAyMTYyODgsImV4cCI6MjA2NTc5MjI4OH0.zwum89N1ocIjyj3IEaudCQr6DVn9DWHlmIi9dQ4tkUM'
     const supabase = supabase.createClient(supabaseUrl, supabaseKey)
 
-    async function loadData() {
-      const { data, error } = await supabase
-        .from('YOUR_TABLE_NAME')
-        .select('*')
-
-      const output = document.getElementById('output')
+    async function loadData(tableName, outputId) {
+      const { data, error } = await supabase.from(tableName).select('*')
+      const output = document.getElementById(outputId)
       if (error) {
         output.textContent = 'Error: ' + error.message
       } else {
@@ -26,7 +58,8 @@
       }
     }
 
-    loadData()
+    loadData('transaction_lines', 'transaction_lines_output')
+    loadData('transaction_lines_version_history', 'transaction_lines_version_history_output')
   </script>
 </body>
 </html>
